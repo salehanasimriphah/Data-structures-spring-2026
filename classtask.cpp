@@ -1,94 +1,83 @@
-#include <iostream>
+#include<iostream>
+#include<conio.h>
 using namespace std;
-struct Node 
-{
-    int data;
-    Node* next;
-};
-class data
-{
-private:
-	
-Node* head;
-
-public:
-	
- data() : head(NULL) {}
-void insertAtBeginning(int value)    
-{        
-   Node* newNode = new Node();        
-   newNode->data = value;        
-   newNode->next = head;        
-   head = newNode;    
+struct Node{
+ 	int data;
+ 	Node *next;
+ };
+void insertatbegin(Node *&head,int value){
+	Node *newNode= new Node();
+	newNode->data=value;
+	newNode->next=head;
+	head=newNode;
 }
-void deleteAtPosition(int position) 
-{
-    if (head == NULL) 
-    {
-        cout << "List is empty..." << endl;
-        return;
-    }
-
-    if (position == 1) 
-    {
-        Node* temp = head;
-        head = head->next;
-        cout << "Deleted: " << temp->data << endl;
-        delete temp;
-        return;
-    }
-
-    Node* current = head;
-    Node* previous = NULL;
-
-    for (int i = 1; current != NULL && i < position; i++) 
-    {
-        previous = current;
-        current = current->next;
-    }
-
-    if (current == NULL) 
-    {
-        cout << "Position does not exist." << endl;
-        return;
-    }
-
-    
-    previous->next = current->next;
-    cout << "Deleted: " << current->data << endl;
-    delete current;
-}
-
-    void display()
-	{
-  	if (head == NULL) 
-	{
-        cout << "List is empty.\n";
-        return;
-    }
-
-    Node* temp = head;
-    cout << "Linked List: ";
-    while (temp != NULL) 
-	{
-        cout << temp->data << " -> ";
-        temp = temp->next;
-    }
-    cout << "NULL\n";
+void deleteatspecific(Node*&head,int pos){
+	if(head==NULL){
+		cout<<"List is empty !!" << endl;
+		return;
 	}
-};
-int main()
-{
-	
-	data list;
-	list.insertAtBeginning(50); 
-	list.insertAtBeginning(40); 
-	list.insertAtBeginning(30); 
-	list.insertAtBeginning(20); 
-	list.insertAtBeginning(10); 
-	list.display();
-	list.deleteAtPosition(3);
-	list.display();
+	if(pos==1){
+		Node*temp=head;
+		head=head->next;
+		cout<<" Deleted : " <<temp->data << endl;
+		delete temp;
+		return;
+	}
+	Node *temp=head;
+	for(int i =1 ;temp!=NULL&&i<pos-1;i++){
+		temp=temp->next;
+	}
+	if(temp==NULL || temp->next==NULL){
+		cout<<" Invalid position " << endl;
+		return;
+	}
+	Node * del=temp->next;
+	temp->next=del->next;
+	cout<<" Deleted : " <<del->data << endl;
+	delete del;
+}
+void display(Node*&head){
+	for(Node*temp=head;temp!=NULL;temp=temp->next){
+		cout<<" Data : " << temp->data << " Address : " << temp->next << endl;
+			
+	}
+}
+int main (){
+	Node * head=NULL;
+	int pos;
+	int value;
+	int choice;
+	do{
+	cout<<"Menu : " << endl;
+	cout<<"1. Insert at beginning "<< endl;
+	cout<<"2. Delete at specific position "<< endl;
+	cout<<"3. Display " << endl;
+	cout<<"4. Exit"<< endl;
+	cout<<"Choose any one "<< endl;
+	cin>>choice;
+	switch(choice){
+		case 1 :
+			cout<< "Enter value to insert : " << endl;
+			cin>>value;
+			insertatbegin(head,value);
+			break;
+	    case 2 :
+			cout<< "Enter position to delete: " << endl;
+			cin>>pos;
+		    deleteatspecific(head,pos);
+			break;
+		case 3 :
+			display(head);
+			break;
+		case 4 :
+			cout<<"Exiting the menu " << endl;
+		    break;
+		default:
+			cout<<"Invalid choice " << endl;
+}
 
-	return 0;
+	} while(choice!=4);
+	getch();
+	return 0;	
+	
 }
